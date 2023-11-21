@@ -1,0 +1,74 @@
+用递归思想，写一个方法，首先要知道二叉树前序遍历根节点是第一个输出的，然后依次是左节点，右节点，在此之前还要先判断节点是否为null,就是左或右节点是否遍历完
+
+中序遍历和后序遍历的代码和前序遍历的代码几乎相同，唯一不同的是根节点的输出，中序遍历的根节点的输出在中间，后续遍历的根节点的输出在最后
+
+**前序遍历**
+
+* 
+
+````
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        //因为要返回，所以定义一个集合
+        List<Integer> res = new ArrayList<Integer>();
+        //调用preorder方法，传入参数（root和res集合）
+        preorder(root,res);
+        //方法结束后，返回集合
+        return res;
+    }
+    public void preorder(TreeNode root , List<Integer>res){
+        //判断节点有没有遍历完
+        if(root == null){
+            //如果为null,用return来结束
+            return;
+        }
+        //因为前序遍历，所以根节点要先输出
+        res.add(root.val);
+        //然后是左节点（调用我们定义的preorder方法）
+        preorder(root.left,res);
+        //右节点（调用我们定义的preorder方法）
+        preorder(root.right,res);
+    }
+}
+
+
+**中序遍历**
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List <Integer> res = new ArrayList <Integer> ();
+        inorder(root,res);
+        return res;
+    }
+    public void inorder (TreeNode root , List <Integer> res){
+        if(root == null){
+            return;
+        }
+        inorder(root.left,res);
+        //中序遍历的根节点的输出在中间
+        res.add(root.val);
+        inorder(root.right,res);
+    }
+}
+
+**后序遍历**
+
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List <Integer> res = new ArrayList <Integer> ();
+        postorder(root,res);
+        return res;
+    }
+    public void postorder (TreeNode root , List<Integer>res){
+        if(root == null){
+            return;
+        }
+        postorder(root.left,res);
+        postorder(root.right,res);
+        //后续遍历的根节点的输出在最后
+        res.add(root.val);
+    }
+}
+```
+````
+
