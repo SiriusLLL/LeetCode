@@ -178,7 +178,7 @@ package com.leetcode.leetcode.editor.cn;
 //    }
 //}
 
-//// 堆排序
+// 堆排序
 class Solution {
     public static int[] sortArray(int[] nums) {
         if (nums.length > 1) {
@@ -259,6 +259,5 @@ class Solution {
             heapify(arr, 0, size);
         }
     }
-
 }
 //leetcode submit region end(Prohibit modification and deletion)
