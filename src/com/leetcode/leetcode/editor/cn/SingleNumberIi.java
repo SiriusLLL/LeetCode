@@ -40,27 +40,30 @@ public class SingleNumberIi {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        public static int singleNumber(int[] nums) {
+        public int singleNumber(int[] nums) {
             return find(nums, 3);
         }
 
-        // 更通用的方法
-        // 已知数组中只有1种数出现次数少于m次，其他数都出现了m次
-        // 返回出现次数小于m次的那种数
-        public static int find(int[] arr, int m) {
-            // cnts[0] : 0位上有多少个1
-            // cnts[i] : i位上有多少个1
-            // cnts[31] : 31位上有多少个1
+        public int find(int[] arr, int m) {
             int[] cnts = new int[32];
             for (int num : arr) {
                 for (int i = 0; i < 32; i++) {
+
+                    // 统计每个数字每一位上1的数量
                     cnts[i] += (num >> i) & 1;
                 }
             }
+
             int ans = 0;
             for (int i = 0; i < 32; i++) {
+
+                // 以 m = 3 为例
+                // 如果第 i 位上的 1 的个数无法被 3 整除
+                // 就说明我们要找的那个数在第 i 位上为 1
                 if (cnts[i] % m != 0) {
-                    ans |= 1 << i;
+
+                    // 因此，将ans的第 i 位设置为 1（1 向左移动 i 位）
+                    ans = ans | (1 << i);
                 }
             }
             return ans;
