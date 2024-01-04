@@ -110,6 +110,8 @@ public class IntersectionOfTwoLinkedLists {
      * }
      * }
      */
+
+    // 不要提交这个类
     public static class ListNode {
         public int val;
         public ListNode next;
@@ -117,11 +119,14 @@ public class IntersectionOfTwoLinkedLists {
 
     public class Solution {
         public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+
+            // 判空
             if (headA == null || headB == null) {
                 return null;
             }
 
             ListNode a = headA, b = headB;
+            // 引入中间变量diff，记录两个链表的长度之差
             int diff = 0;
             while (a.next != null) {
                 a = a.next;
@@ -132,10 +137,12 @@ public class IntersectionOfTwoLinkedLists {
                 diff--;
             }
 
+            // 如果两个链表相交，最后一个节点一定是同一个节点。如果不是则返回null
             if (a != b) {
                 return null;
             }
 
+            // 把长链表分配给a
             if (diff >= 0) {
                 a = headA;
                 b = headB;
@@ -144,12 +151,13 @@ public class IntersectionOfTwoLinkedLists {
                 b = headA;
             }
 
+            // 让长链表先走完多出来的diff步
             diff = Math.abs(diff);
-
             while (diff-- != 0) {
                 a = a.next;
             }
 
+            // 两个链表同时遍历，找到第一个相同的节点，返回a即可
             while (a != b) {
                 a = a.next;
                 b = b.next;
