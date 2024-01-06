@@ -59,81 +59,89 @@
 //
 // 
 //
-// Related Topics 哈希表 链表 👍 1236 👎 0
+// Related Topics 哈希表 链表 👍 1295 👎 0
 
 
 package com.leetcode.leetcode.editor.cn;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CopyListWithRandomPointer {
     public static void main(String[] args) {
         Solution solution = new CopyListWithRandomPointer().new Solution();
-
-        Node node7 = new Node(7);
-        Node node13 = new Node(13);
-        Node node11 = new Node(11);
-        Node node10 = new Node(10);
-        Node node1 = new Node(1);
-
-        // 设置节点的next指针
-        node7.next = node13;
-        node13.next = node11;
-        node11.next = node10;
-        node10.next = node1;
-
-        // 设置节点的random指针
-        node7.random = null; // 第一个节点的random指针为空
-        node13.random = node7; // 第二个节点的random指针指向第一个节点
-        node11.random = node1; // 第三个节点的random指针指向第五个节点
-        node10.random = node11; // 第四个节点的random指针指向第三个节点
-        node1.random = node7; // 第五个节点的random指针指向第一个节点
-
-        // 完成链表构建
-        Node head = node7;
-
-        solution.copyRandomList(head);
-    }
-
-
-    static class Node {
-        int val;
-        Node next;
-        Node random;
-
-        public Node(int val) {
-            this.val = val;
-            this.next = null;
-            this.random = null;
-        }
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+    
+//    // 不提交这个类
+//    class Node {
+//        int val;
+//        Node next;
+//        Node random;
+//
+//        public Node(int val) {
+//            this.val = val;
+//            this.next = null;
+//            this.random = null;
+//        }
+//    }
+
     class Solution {
         public Node copyRandomList(Node head) {
-            if (head == null) return null;
-            Map<Node, Node> map = new HashMap<>();
+            if (head == null) {
+                return null;
+            }
             Node cur = head;
+            Node next = null;
 
-            // 复制原链表到新链表
+            // 在原始链表的内部构建复制后的链表
+            // 1 -> 2 -> 3 -> ...
+            // 变成 : 1 -> 1' -> 2 -> 2' -> 3 -> 3' -> ...
             while (cur != null) {
-                map.put(cur, new Node(cur.val));
-                cur = cur.next;
+                next = cur.next;
+                cur.next = new Node(cur.val);
+                cur.next.next = next;
+                cur = next;
             }
-
-            // 原链表指针归位
+            // 然后cur回到开始的节点head
             cur = head;
+            // 初始化最终需要返回的链表
+            Node copy = null;
 
-            // 修改新链表的指向
+            // 将两个链表分离
+            // 构建新链表的连接关系
             while (cur != null) {
-                map.get(cur).next = map.get(cur.next);
-                map.get(cur).random = map.get(cur.random);
-                cur = cur.next;
+                next = cur.next.next;
+                copy = cur.next;
+                copy.random = cur.random != null ? cur.random.next : null;
+                cur = next;
             }
-            return map.get(head);
+            // 新链表的头节点就是原始链表头节点的下一个
+            Node ans = head.next;
+
+            // 原始链表与新链表的分离
+            cur = head;
+            while (cur != null) {
+                next = cur.next.next;
+                copy = cur.next;
+                cur.next = next;
+                copy.next = next != null ? next.next : null;
+                cur = next;
+            }
+            return ans;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
-
 }
