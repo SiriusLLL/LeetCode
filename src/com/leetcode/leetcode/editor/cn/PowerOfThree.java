@@ -52,6 +52,7 @@ package com.leetcode.leetcode.editor.cn;
 public class PowerOfThree {
     public static void main(String[] args) {
         Solution solution = new PowerOfThree().new Solution();
+
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
