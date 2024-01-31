@@ -69,7 +69,7 @@ public class ReverseNodesInKGroup {
     class Solution {
         public ListNode reverseKGroup(ListNode head, int k) {
 
-            // 处理第一组，记录起始和结束节点 ，并且返回第一组的头节点
+            // 处理第一组，记录起始和结束节点，并且返回第一组的头节点
             ListNode start = head;
             ListNode end = groupEnd(start, k);
 
